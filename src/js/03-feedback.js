@@ -3,6 +3,8 @@ import throttle from 'lodash.throttle';
 const form = document.querySelector('.feedback-form');
 const input = document.querySelector('.feedback-form input');
 const textarea = document.querySelector('.feedback-form textarea');
+const button = document.querySelector('.feedback-form button');
+
 const STORAGE_KEY = 'feedback-form-state';
 
 const formData = {
@@ -16,6 +18,7 @@ formDataStorage();
 
 form.addEventListener('submit', onFormSubmit);
 form.addEventListener('input', throttle(onTextareaInput, 500));
+button.addEventListener('click', onBtnSubmit);
 
 function onTextareaInput(event) {
   currentFormData = {
@@ -44,4 +47,11 @@ function formDataStorage() {
   const { email, message } = populateTextarea();
   input.value = email;
   textarea.value = message;
+}
+
+function onBtnSubmit() {
+  if (textarea.value === '' || input.value === '') {
+    return alert('Please add all information.');
+  }
+  console.log(currentFormData);
 }
